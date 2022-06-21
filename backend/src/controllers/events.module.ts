@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { EventsGateway } from './events.gateway';
+import { EventController } from './events.controller';
 
 @Module({
   imports: [
@@ -16,8 +16,20 @@ import { EventsGateway } from './events.gateway';
           },
         },
       },
+      {
+        name: 'MQ_COUNT',
+        transport: Transport.RMQ,
+        options: {
+          urls: ['amqp://admin:admin@localhost:5672'],
+          queue: 'download-image-received',
+          queueOptions: {
+            durable: false,
+          },
+        },
+      },
     ]),
   ],
-  providers: [EventsGateway],
+  providers: [EventController],
+  controllers: [EventController],
 })
-export class EventsModule {}
+export class EventControolerModule {}

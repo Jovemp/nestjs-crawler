@@ -4,12 +4,15 @@ import { io } from "socket.io-client";
 import { DataDTO } from "./model/data.model";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-import { stringify } from "querystring";
 
 function App() {
   const socket = io("http://localhost:3000");
 
   const [inputUrl, setInputUrl] = useState<string>("");
+
+  socket.on("received", (data) => {
+    console.log(data);
+  });
 
   function enviar() {
     const data: DataDTO = {
