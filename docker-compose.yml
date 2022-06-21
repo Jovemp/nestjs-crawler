@@ -20,21 +20,3 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: root
     ports:
       - 27017:27017 
-
-  service_download:
-    build:
-      context: ./service/
-    environment:
-      - FILA_HOST_RABBITMQ=amqp://admin:admin@rabbitmq:5672
-      - FILA_DOWNLOAD_IMAGE=download-image
-      - FILA_DOWNLOAD_IMAGE_RECEIVE_COUNT=download-image-receive-count
-      - FILA_DOWNLOAD_IMAGE_RECEIVED=download-image-received
-      - MONGODB=mongodb://mongodb_container/pbx-desafio
-    depends_on:
-      - "rabbitmq"   
-      - "mongodb_container"    
-    ports:
-      - "3004:3004"
-    links:
-      - rabbitmq:rabbitmq
-      - mongodb_container:mongodb_container
